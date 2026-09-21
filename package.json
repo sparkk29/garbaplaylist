@@ -1,0 +1,25 @@
+{
+  "name": "garbaplaylist",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n web,party -c magenta,cyan \"vite\" \"node server/party.mjs\"",
+    "dev:web": "vite",
+    "dev:party": "node server/party.mjs",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "start:party": "node server/party.mjs"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.5",
+    "@types/ws": "^8.18.1",
+    "concurrently": "^9.2.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}

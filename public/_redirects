@@ -1,0 +1,5 @@
+/* Fallback for SPA routes on static hosts that read this file */
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
