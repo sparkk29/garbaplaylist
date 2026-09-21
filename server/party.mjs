@@ -110,6 +110,14 @@ wss.on('connection', (ws, req) => {
   ws.on('close', () => leave(ws))
 })
 
+server.on('error', (err) => {
+  if (err && err.code === 'EADDRINUSE') {
+    console.error(`party relay: port ${PORT} already in use — free it or set PARTY_PORT`)
+    process.exit(1)
+  }
+  throw err
+})
+
 server.listen(PORT, () => {
   console.log(`party relay on ws://localhost:${PORT}`)
 })

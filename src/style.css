@@ -469,6 +469,51 @@ body.playing .i-play {
   transform: translateX(-50%) translateY(0);
 }
 
+.join-hint {
+  position: fixed;
+  z-index: 6;
+  transform: translateX(-50%);
+  max-width: min(16rem, 70vw);
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.45rem;
+  background: #7a1d1e;
+  color: #f7f1e6;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 180ms ease;
+  box-shadow: 0 8px 24px rgba(20, 10, 0, 0.25);
+}
+
+.join-hint::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: var(--notch, 50%);
+  width: 10px;
+  height: 10px;
+  background: #7a1d1e;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.join-hint.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.join-hint b {
+  display: block;
+  margin-top: 0.15rem;
+  font-weight: 700;
+}
+
+.join-hint-emoji {
+  letter-spacing: 0.05em;
+}
+
 .party-panel {
   position: fixed;
   top: 50%;

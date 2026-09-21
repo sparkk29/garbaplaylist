@@ -34,7 +34,11 @@ function shell(mode: 'floor' | 'party' | 'remote') {
 
   return `
     <div id="yt" aria-hidden="true"></div>
-    <canvas id="floor" aria-label="Garba circle. Drag the outer ring to seek. Swipe to change cloth."></canvas>
+    <canvas id="floor" aria-label="Garba circle. Drag the outer ring to seek. Swipe to change cloth. Tap the waiting dancer to join."></canvas>
+    <div class="join-hint" id="join-hint" aria-hidden="true">
+      Your Garba gang is waiting! <span class="join-hint-emoji">&#128131;&#129705;</span>
+      <b>Click to join the group.</b>
+    </div>
 
     <header class="top">
       <div class="brand">
@@ -121,6 +125,7 @@ const toastEl = $('toast')
 const themes = $('theme-list')
 const ytCredit = document.getElementById('yt-credit') as HTMLAnchorElement
 const floor = document.getElementById('floor') as HTMLCanvasElement
+const joinHint = document.getElementById('join-hint') as HTMLDivElement
 const partyCode = document.getElementById('party-code')
 const partyStatus = document.getElementById('party-status')
 const partyPeers = document.getElementById('party-peers')
@@ -169,7 +174,31 @@ const scene = createScene({
     }
     setCloth(next, { play: true, announce: true })
   },
+  onJoin() {
+    tap('manjira', 0.5)
+    toast('Welcome to the circle')
+    placeJoinHint()
+  },
 })
+
+function placeJoinHint() {
+  const at = scene.newcomerHint()
+  if (!at) {
+    joinHint.classList.remove('show')
+    return
+  }
+  const box = floor.getBoundingClientRect()
+  const over = box.left + at.x
+  joinHint.style.top = `${box.top + at.y + at.r + 10}px`
+  joinHint.classList.add('show')
+  const half = joinHint.offsetWidth / 2
+  const edge = 12
+  const left = Math.min(Math.max(over, half + edge), window.innerWidth - half - edge)
+  joinHint.style.left = `${left}px`
+  joinHint.style.setProperty('--notch', `${half + (over - left)}px`)
+}
+
+window.addEventListener('resize', placeJoinHint)
 
 const player = createPlayer({
   mountId: 'yt',
@@ -537,6 +566,9 @@ async function boot() {
   }
 
   await setupParty()
+  placeJoinHint()
+  // Keep the tip parked under the waiting dancer as layout settles.
+  requestAnimationFrame(placeJoinHint)
 }
 
 boot().catch((err) => {

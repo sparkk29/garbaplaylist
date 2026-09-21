@@ -16,7 +16,7 @@ export const CLOTHS: Cloth[] = [
       groundDeep: '#DCCBAB',
       ink: '#14100E',
       accent: '#E2A32D',
-      figure: ['#9E2B25', '#1B3A5C', '#9E2B25', '#1F6B4F'],
+      figure: ['#9E2B25', '#1B3A5C', '#C9A227', '#1F6B4F'],
       pot: '#7A1D1E',
       flame: '#F2B33D',
       flameHot: '#FFE9B0',
